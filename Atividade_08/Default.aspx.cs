@@ -37,24 +37,20 @@ namespace Atividade_08
 
         private void getAll()
         {
-            //chamando a api pela url
+            
             System.Net.Http.HttpResponseMessage response = client.GetAsync("api/instituicao").Result;
 
-            //se retornar com sucesso busca os dados
             if (response.IsSuccessStatusCode)
             {
-                //pegando o cabeçalho
+
                 instituicaoUri = response.Headers.Location;
 
-                //Pegando os dados do Rest e armazenando na variável usuários
                 var instituicao = response.Content.ReadAsAsync<IEnumerable<Instituicao>>().Result;
 
-                //preenchendo a lista com os dados retornados da variável
                 grdInstituicao.DataSource = instituicao;
                 grdInstituicao.DataBind();
             }
 
-            //Se der erro na chamada, mostra o status do código de erro.
             else
                 Response.Write(response.StatusCode.ToString() + " - " + response.ReasonPhrase);
         }
